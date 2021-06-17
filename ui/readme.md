@@ -7,4 +7,5 @@ Install required modules using:
 Then, run the app from the command line using:
 
 `export FLASK_ENV=development
+
 flask run`
