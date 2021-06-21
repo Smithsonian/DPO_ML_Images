@@ -120,8 +120,8 @@ def get_resultsfile():
     # Instead of hard coding the json data, read from file
     with open('data/a19900709000cp03.json') as json_file:
         p = json.load(json_file)
-    x = p[0]["bounding_poly"][0]["normalized_vertices"]["x"]
-    y = p[0]["bounding_poly"][0]["normalized_vertices"]["y"]
+    x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"]
+    y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"]
     return render_template('results.html', x_value=x, y_value=y)
 
 

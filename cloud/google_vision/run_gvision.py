@@ -96,10 +96,9 @@ for filename in list_of_files:
         content = image_file.read()
     image = vision.types.Image(content = content)
     results = client.object_localization(image=image)
-    #objects = results.localized_object_annotations
-    jsonObj = json.loads(MessageToJson(results))["localizedObjectAnnotations"]
+    jsonObj = json.loads(MessageToJson(results, preserving_proto_field_name=True))#["localizedObjectAnnotations"]
     with open('{}/{}.json'.format("images", file_stem), 'w') as out:
-        out.write(str(objects))
+            out.write(json.dumps(jsonObj))
 
 
 sys.exit(0)
