@@ -90,15 +90,15 @@ def get_results():
             "x": 0.39320603013038635,
             "y": 0.2360943704843521
         }},
-        {"normalized_vertices_1": {
+        {"normalized_vertices": {
           "x": 0.6967532634735107,
           "y": 0.2360943704843521
         }},
-        {"normalized_vertices_2": {
+        {"normalized_vertices": {
           "x": 0.6967532634735107,
           "y": 0.3839291036128998
         }},
-        {"normalized_vertices_3": {
+        {"normalized_vertices": {
           "x": 0.39320603013038635,
           "y": 0.3839291036128998
         }}
@@ -110,8 +110,8 @@ def get_results():
     # with open('data/a19900709000cp03.json') as json_file:
     #     data = json.load(json_file)
     # p = json.loads(json_file)
-    x = p[0]["bounding_poly"][0]["normalized_vertices"]["x"]
-    y = p[0]["bounding_poly"][0]["normalized_vertices"]["y"]
+    x = p[0]["bounding_poly"][1]["normalized_vertices"]["x"]
+    y = p[0]["bounding_poly"][1]["normalized_vertices"]["y"]
     return render_template('results.html', x_value=x, y_value=y)
 
 
