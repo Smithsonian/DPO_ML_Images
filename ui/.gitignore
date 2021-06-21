@@ -4,3 +4,4 @@ __pycache__
 *.log
 localsync.sh
 edan.py
+.idea
