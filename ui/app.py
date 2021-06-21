@@ -136,6 +136,32 @@ def help():
 #     conn.close()
 #     results = {}
 #     results = data
+j = """[{"mid": "/m/0jbk",
+    "name": "Animal",
+    "score": 0.6201662421226501,
+    "bounding_poly": {
+        "normalized_vertices": {
+            "x": 0.39320603013038635,
+            "y": 0.2360943704843521
+        },
+        "normalized_vertices": {
+          "x": 0.6967532634735107,
+          "y": 0.2360943704843521
+        },
+        "normalized_vertices": {
+          "x": 0.6967532634735107,
+          "y": 0.3839291036128998
+        },
+        "normalized_vertices": {
+          "x": 0.39320603013038635,
+          "y": 0.3839291036128998
+        }
+    }
+    }
+]"""
+
+p = json.loads(j)
+print(p[0]["bounding_poly"])
 #     return render_template('data_sources.html', data = results, summary = summary)
 
 
