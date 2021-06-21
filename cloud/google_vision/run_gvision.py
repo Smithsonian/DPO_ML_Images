@@ -17,7 +17,7 @@ from pyfiglet import Figlet
 #Script variables
 script_title = "Google Vision ML Image Data Extraction"
 subtitle = "Digitization Program Office\nOffice of the Chief Information Officer\nSmithsonian Institution\nhttps://dpo.si.edu"
-ver = "0.1"
+ver = "0.2"
 vercheck = "https://raw.githubusercontent.com/Smithsonian/DPO_ML_Images/master/cloud/google_vision/toolversion.txt"
 repo = "https://github.com/Smithsonian/DPO_ML_Images/"
 lic = "Available under the Apache 2.0 License"
@@ -74,11 +74,12 @@ else:
 #Load google vision
 from google.cloud import vision_v1p3beta1 as vision
 client = vision.ImageAnnotatorClient()
+from google.protobuf.json_format import MessageToJson
 
 
 
 #Import database settings from settings.py file
-import settings
+#import settings
 
 
 #Get images
@@ -95,7 +96,8 @@ for filename in list_of_files:
         content = image_file.read()
     image = vision.types.Image(content = content)
     results = client.object_localization(image=image)
-    objects = results.localized_object_annotations
+    #objects = results.localized_object_annotations
+    jsonObj = json.loads(MessageToJson(results))["localizedObjectAnnotations"]
     with open('{}/{}.json'.format("images", file_stem), 'w') as out:
         out.write(str(objects))
 
