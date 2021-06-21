@@ -115,5 +115,15 @@ def get_results():
     return render_template('results.html', x_value=x, y_value=y)
 
 
+@app.route('/results_file', methods=['GET', 'POST'])
+def get_resultsfile():
+    # Instead of hard coding the json data, read from file
+    with open('data/a19900709000cp03.json') as json_file:
+        p = json.load(json_file)
+    x = p[0]["bounding_poly"][0]["normalized_vertices"]["x"]
+    y = p[0]["bounding_poly"][0]["normalized_vertices"]["y"]
+    return render_template('results.html', x_value=x, y_value=y)
+
+
 if __name__ == '__main__':
     app.run()
