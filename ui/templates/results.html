@@ -13,12 +13,33 @@
 <body>
 
 <div class="container">
-    <p><strong>x: {{x_value}}</strong></p>
-    <p><strong>y: {{y_value}}</strong></p>
-<p>
+  <div class="row">
+    <div class="col">
+      <img src = "static/{{file}}" width = 500 height = "auto">
+    </div>
+    <div class="col">
+      <ul>
+        <li> <strong>Name: {{name}}</strong> </li>
+        <li> <strong>Score: {{score}}</strong> </li>
+        <li> <strong>Vertices: </strong> </li>
+        <ul>
+            <li> <strong>x: {{x}}</strong> </li>
+            <li> <strong>y: {{y}}</strong> </li>
+            <br>
+            <li> <strong>x: {{x_1}}</strong> </li>
+            <li> <strong>y: {{y_1}}</strong> </li>
+            <br>
+            <li> <strong>x: {{x_2}}</strong> </li>
+            <li> <strong>y: {{y_2}}</strong> </li>
+            <br>
+            <li> <strong>x: {{x_3}}</strong> </li>
+            <li> <strong>y: {{y_3}}</strong> </li>
+            <br>
+        </ul>
+    </ul>
+    </div>
+  </div>
 </div>
-
-
 
 <!-- JavaScript -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
@@ -27,3 +48,4 @@
 
 </body>
 </html>
+
