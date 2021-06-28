@@ -74,11 +74,6 @@ def page_not_found(e):
     return Response(data, mimetype='application/json'), 500
 
 
-@app.route('/', methods=['GET', 'POST'])
-def home():
-    """Homepage in HTML format"""
-    return render_template('home.html')
-
 
 @app.route('/results', methods=['GET', 'POST'])
 def get_results():
@@ -118,30 +113,43 @@ def get_results():
 @app.route('/results_file', methods=['GET', 'POST'])
 def get_resultsfile():
     # Instead of hard coding the json data, read from file
+    file = request.values.get('file')
     import glob
     path = "data/*.jpg"
     from pathlib import Path
-    for file in glob.glob(path):
-        file_stem = Path(file).stem
-        json_file = "{}/{}.json".format("data", file_stem)
-        # print(file_stem)
-        print(json_file)
-        with open(json_file) as jsonfile:
-            p = json.load(jsonfile)
-            print(p)
-        x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"]
-        y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"]
-        x_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["x"]
-        y_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["y"]
-        x_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["x"]
-        y_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["y"]
-        x_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["x"]
-        y_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["y"]
-        name = p["localized_object_annotations"][0]["name"]
-        score = p["localized_object_annotations"][0]["score"]
+    file_stem = Path(file).stem
+    json_file = "{}/{}.json".format("data", file_stem)
+    # print(file_stem)
+    print(json_file)
+    with open(json_file) as jsonfile:
+        p = json.load(jsonfile)
+        print(p)
+    x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"]
+    y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"]
+    x_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["x"]
+    y_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["y"]
+    x_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["x"]
+    y_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["y"]
+    x_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["x"]
+    y_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["y"]
+    name = p["localized_object_annotations"][0]["name"]
+    score = p["localized_object_annotations"][0]["score"]
 
     return render_template('results.html',name = name, score = score, x = x, y = y,x_1 = x_1, y_1 = y_1,
                            x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file )
+
+@app.route('/', methods=['GET', 'POST'])
+def get_list():
+    # Instead of hard coding the json data, read from file
+    import glob
+    path = "data/*.jpg"
+    from pathlib import Path
+    list_of_files = []
+    for file in glob.glob(path):
+        list_of_files.append(file)
+
+    return render_template('list.html', list_of_files = list_of_files)
+
 
 
 if __name__ == '__main__':
