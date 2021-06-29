@@ -12,17 +12,23 @@
 </head>
 <body>
 <div class = "container">
-    <div class = "row">
-        <div class = "col-8" >
     <h2>List of file results: </h2>
     {% for file in list_of_files %}
-        <div class = "row">
-            <img src = "static/{{file}}" width = 200 height = "auto">
+    <div class = "row">
+<!--        <div class = "row">-->
+            <div class = "col-4">
+            <h4>File name: {{file}}</h4>
+<!--        </div>-->
+        </div>
+        <div class = "col-3" >
+            <img src = "static/data/{{file}}.jpg" width = 200 height = "auto">
+        </div>
+            <div class = "col-5">
             <p> <a href="{{ url_for('get_resultsfile') }}?file={{file}}">Results</a></p>
-        </div>
-    {% endfor %}
-        </div>
+            </div>
     </div>
+    {% endfor %}
+
 </div>
 
 

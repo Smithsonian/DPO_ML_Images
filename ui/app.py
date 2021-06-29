@@ -146,7 +146,8 @@ def get_list():
     from pathlib import Path
     list_of_files = []
     for file in glob.glob(path):
-        list_of_files.append(file)
+        file_stem = Path(file).stem
+        list_of_files.append(file_stem)
 
     return render_template('list.html', list_of_files = list_of_files)
 
