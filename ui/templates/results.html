@@ -8,14 +8,17 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+<!--    <style>-->
 </head>
 <body>
 
 <div class="container">
   <div class="row">
     <div class="col-8">
-      <img src = "static/data/{{file}}.jpg" width = 500 height = "auto">
+        <div class = "frame">
+            <img src = "static/data/{{file}}.jpg" style = "width:{{image_width}}px; height:{{image_height}}px;
+            border:5px solid {{border_color}}">
+        </div>
     </div>
     <div class="col-4">
           <p><strong>Name: {{name}}</strong></p>
@@ -46,4 +49,5 @@
 
 </body>
 </html>
+
 

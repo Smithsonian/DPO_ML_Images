@@ -124,19 +124,33 @@ def get_resultsfile():
     with open(json_file) as jsonfile:
         p = json.load(jsonfile)
         print(p)
-    x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"]
-    y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"]
-    x_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["x"]
-    y_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["y"]
-    x_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["x"]
-    y_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["y"]
-    x_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["x"]
-    y_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["y"]
+    from PIL import Image
+    im = Image.open("{}/{}.jpg".format("data", file_stem))
+    im.size
+    image_width = 500
+    image_height = 400
+    x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"] * image_width
+    y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"] * image_height
+    x_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["x"] * image_width
+    y_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["y"] * image_height
+    x_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["x"] * image_width
+    y_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["y"] * image_height
+    x_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["x"] * image_width
+    y_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["y"] * image_height
     name = p["localized_object_annotations"][0]["name"]
     score = p["localized_object_annotations"][0]["score"]
+    border_color = " "
+    if(score >= 0.9):
+        border_color = "green"
+    elif (0.8 <= score < 0.9 ):
+        border_color = "yellow"
+    else:
+        border_color = "red"
+
 
     return render_template('results.html',name = name, score = score, x = x, y = y,x_1 = x_1, y_1 = y_1,
-                           x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file )
+                           x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file, image_width = image_width,
+                           image_height = image_height, border_color = border_color )
 
 @app.route('/', methods=['GET', 'POST'])
 def get_list():
