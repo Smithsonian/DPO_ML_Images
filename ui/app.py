@@ -115,17 +115,17 @@ def get_resultsfile():
     # Instead of hard coding the json data, read from file
     file = request.values.get('file')
     import glob
-    path = "data/*.jpg"
+    path = "garden data_1/*.jpg"
     from pathlib import Path
     file_stem = Path(file).stem
-    json_file = "{}/{}.json".format("data", file_stem)
+    json_file = "{}/{}.json".format("garden data_1", file_stem)
     # print(file_stem)
     print(json_file)
     with open(json_file) as jsonfile:
         p = json.load(jsonfile)
         print(p)
     from PIL import Image
-    im = Image.open("{}/{}.jpg".format("data", file_stem))
+    im = Image.open("{}/{}.jpg".format("garden data_1", file_stem))
     im.size
     image_width = 500
     image_height = 400
@@ -156,7 +156,7 @@ def get_resultsfile():
 def get_list():
     # Instead of hard coding the json data, read from file
     import glob
-    path = "data/*.jpg"
+    path = "garden data_1/*.jpg"
     from pathlib import Path
     list_of_files = []
     for file in glob.glob(path):
