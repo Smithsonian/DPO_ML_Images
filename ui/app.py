@@ -139,6 +139,10 @@ def get_resultsfile():
     y_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["y"] * image_height
     name = p["localized_object_annotations"][0]["name"]
     score = p["localized_object_annotations"][0]["score"]
+    margin_top = y_2
+    margin_left = x
+    border_width = x_1 - x
+    border_height = y_2 - y_1
     border_color = " "
     if(score >= 0.9):
         border_color = "green"
@@ -150,7 +154,8 @@ def get_resultsfile():
 
     return render_template('results.html',name = name, score = score, x = x, y = y,x_1 = x_1, y_1 = y_1,
                            x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file, image_width = image_width,
-                           image_height = image_height, border_color = border_color )
+                           image_height = image_height, border_color = border_color, margin_top = margin_top,
+                           margin_left = margin_left, border_width = border_width, border_height = border_height)
 
 @app.route('/', methods=['GET', 'POST'])
 def get_list():
