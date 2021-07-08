@@ -129,41 +129,67 @@ def get_resultsfile():
     im.size
     image_width = 500
     image_height =( image_width / im.size[0]) * im.size[1]
-    x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"] * image_width
-    x = round(x)
-    y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"] * image_height
-    y = round(y)
-    x_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["x"] * image_width
-    x_1 = round(x_1)
-    y_1 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][1]["y"] * image_height
-    y_1 = round(y_1)
-    x_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["x"] * image_width
-    x_2 = round(x_2)
-    y_2 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][2]["y"] * image_height
-    y_2 = round(y_2)
-    x_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["x"] * image_width
-    x_3 = round(x_3)
-    y_3 = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][3]["y"] * image_height
-    y_3 = round(y_3)
-    name = p["localized_object_annotations"][0]["name"]
-    score = p["localized_object_annotations"][0]["score"]
-    margin_top = y_1
-    margin_left = x
-    border_width = x_1 - x
-    border_height = y_2 - y_1
+
+    data = []
+    for object in p["localized_object_annotations"]:
+        x = object["bounding_poly"]["normalized_vertices"][0]["x"] * image_width
+        y = object["bounding_poly"]["normalized_vertices"][0]["y"] * image_height
+        x_1 = object["bounding_poly"]["normalized_vertices"][1]["x"] * image_width
+        y_1 = object["bounding_poly"]["normalized_vertices"][1]["y"] * image_height
+        x_2 = object["bounding_poly"]["normalized_vertices"][2]["x"] * image_width
+        y_2 = object["bounding_poly"]["normalized_vertices"][2]["y"] * image_height
+        x_3 = object["bounding_poly"]["normalized_vertices"][3]["x"] * image_width
+        y_3 = object["bounding_poly"]["normalized_vertices"][3]["y"] * image_height
+
+
+        object_data = {
+            'x': round(x),
+            'y': round(y),
+            'x_1': round(x_1),
+            'y_1': round(y_1),
+            'x_2': round(x_2),
+            'y_2': round(y_2),
+            'x_3': round(x_3),
+            'y_3': round(y_3),
+            'name': p["localized_object_annotations"][0]["name"],
+            'score': p["localized_object_annotations"][0]["score"]
+            'margin_top': y_1,
+            'margin_left': x,
+            'border_width' : x_1 - x,
+            'border_height' : y_2 - y_1,
+            'border_color': " ",
+            if (score >= 0.9):
+                'border_color' = "green",
+            elif (0.8 <= score < 0.9):
+                'border_color' = "yellow",
+            else:
+                'border_color' = "red",
+
+            }
+
+        data.append(object_data)
+
+    return render_template('results.html', file = file, data = data)
+
+    # name = p["localized_object_annotations"][0]["name"]
+    # score = p["localized_object_annotations"][0]["score"]
+    # margin_top = y_1
+    # margin_left = x
+    # border_width = x_1 - x
+    # border_height = y_2 - y_1
     border_color = " "
-    if(score >= 0.9):
-        border_color = "green"
-    elif (0.8 <= score < 0.9 ):
-        border_color = "yellow"
-    else:
-        border_color = "red"
-
-
-    return render_template('results.html',name = name, score = score, x = x, y = y,x_1 = x_1, y_1 = y_1,
-                           x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file, image_width = image_width,
-                           image_height = image_height, border_color = border_color, margin_top = margin_top,
-                           margin_left = margin_left, border_width = border_width, border_height = border_height)
+    # if(score >= 0.9):
+    #     border_color = "green"
+    # elif (0.8 <= score < 0.9 ):
+    #     border_color = "yellow"
+    # else:
+    #     border_color = "red"
+    #
+    #
+    # return render_template('results.html',name = name, score = score, x = x, y = y,x_1 = x_1, y_1 = y_1,
+    #                        x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file, image_width = image_width,
+    #                        image_height = image_height, border_color = border_color, margin_top = margin_top,
+    #                        margin_left = margin_left, border_width = border_width, border_height = border_height)
 
 @app.route('/', methods=['GET', 'POST'])
 def get_list():
