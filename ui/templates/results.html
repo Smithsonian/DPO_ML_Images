@@ -16,8 +16,14 @@
   <div class="row">
     <div class="col-8">
         <div class = "frame">
-            <div style = "border: 5px solid {{border_color}}; margin-left: {{margin_left}}px; margin-top: {{margin_top}}px;
+
+            for object in data...
+
+            <div style = "border: 5px solid {{object.border_color}}; margin-left: {{object.margin_left}}px; margin-top: {{margin_top}}px;
                           width:{{border_width}}px; height:{{border_height}}px; position: absolute;"></div>
+
+            endfor
+
             <img src = "static/garden data_1/{{file}}.jpg" style = "width:{{image_width}}px; height:{{image_height}}px:">
         </div>
     </div>

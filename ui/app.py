@@ -129,6 +129,25 @@ def get_resultsfile():
     im.size
     image_width = 500
     image_height =( image_width / im.size[0]) * im.size[1]
+
+    data = []
+    for object in p["localized_object_annotations"]:
+        x = object["bounding_poly"]["normalized_vertices"][0]["x"] * image_width
+        y = object["bounding_poly"]["normalized_vertices"][0]["y"] * image_height
+        x_1 = object["bounding_poly"]["normalized_vertices"][1]["x"] * image_width
+        y_1 = object["bounding_poly"]["normalized_vertices"][1]["y"] * image_height
+
+        object_data = {
+                'x': round(x),
+                'y': round(y),
+                'x_1': round(x_1),
+                'y_1': round(y_1),
+                <rest of the variables>
+                       }
+
+        data.append(object_data)
+
+
     x = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["x"] * image_width
     x = round(x)
     y = p["localized_object_annotations"][0]["bounding_poly"]["normalized_vertices"][0]["y"] * image_height
@@ -164,6 +183,11 @@ def get_resultsfile():
                            x_2 = x_2, y_2 = y_2, x_3 = x_3, y_3 = y_3, file = file, image_width = image_width,
                            image_height = image_height, border_color = border_color, margin_top = margin_top,
                            margin_left = margin_left, border_width = border_width, border_height = border_height)
+
+    return render_template('results.html', file=file, data=data)
+
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def get_list():
