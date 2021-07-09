@@ -140,6 +140,14 @@ def get_resultsfile():
         y_2 = object["bounding_poly"]["normalized_vertices"][2]["y"] * image_height
         x_3 = object["bounding_poly"]["normalized_vertices"][3]["x"] * image_width
         y_3 = object["bounding_poly"]["normalized_vertices"][3]["y"] * image_height
+        score = object["score"]
+
+        if (score >= 0.9):
+            border_color = "green"
+        elif (0.8 <= score < 0.9):
+            border_color = "yellow"
+        else:
+            border_color = "red"
 
 
         object_data = {
@@ -151,25 +159,18 @@ def get_resultsfile():
             'y_2': round(y_2),
             'x_3': round(x_3),
             'y_3': round(y_3),
-            'name': p["localized_object_annotations"][0]["name"],
-            'score': p["localized_object_annotations"][0]["score"]
+            'name': object["name"],
+            'score': object["score"],
             'margin_top': y_1,
             'margin_left': x,
             'border_width' : x_1 - x,
             'border_height' : y_2 - y_1,
-            'border_color': " ",
-            if (score >= 0.9):
-                'border_color' = "green",
-            elif (0.8 <= score < 0.9):
-                'border_color' = "yellow",
-            else:
-                'border_color' = "red",
-
+            'border_color': border_color
             }
 
         data.append(object_data)
 
-    return render_template('results.html', file = file, data = data)
+    return render_template('results.html', file = file, data = data, image_width = image_width,image_height = image_height )
 
     # name = p["localized_object_annotations"][0]["name"]
     # score = p["localized_object_annotations"][0]["score"]
