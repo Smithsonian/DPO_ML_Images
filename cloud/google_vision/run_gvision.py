@@ -18,12 +18,13 @@ from pyfiglet import Figlet
 script_title = "Google Vision ML Image Data Extraction"
 subtitle = "Digitization Program Office\nOffice of the Chief Information Officer\nSmithsonian Institution\nhttps://dpo.si.edu"
 ver = "0.2"
+# 2022-05-04
 vercheck = "https://raw.githubusercontent.com/Smithsonian/DPO_ML_Images/master/cloud/google_vision/toolversion.txt"
 repo = "https://github.com/Smithsonian/DPO_ML_Images/"
 lic = "Available under the Apache 2.0 License"
 
 
-#Check for updates to the script
+# Check for updates to the script
 try:
     with urllib.request.urlopen(vercheck) as response:
        current_ver = response.read()
@@ -37,33 +38,24 @@ except:
     cur_ver = ver
 
 
-
-
 f = Figlet(font='slant')
 print("\n")
 print (f.renderText(script_title))
-#print(script_title)
 print(msg_text.format(subtitle = subtitle, ver = ver, repo = repo, lic = lic, cur_ver = cur_ver))
 
-
-
-#if len(sys.argv) != 3:
-    #print("Error: arguments missing. Usage:\n\n ./run_gvision.py <folder with jpgs> <process>")
 
 if len(sys.argv) != 2:
     print("Error: arguments missing. Usage:\n\n ./run_gvision.py <folder with jpgs>")
     sys.exit(1)
 else:
-    if os.path.isdir(sys.argv[1]) == False:
+    if not os.path.isdir(sys.argv[1]):
         print("Error: path to JPG files does not exists.")
         sys.exit(1)
     else:
         path = sys.argv[1]
-        #ml_process = sys.argv[2]
 
 
-
-#Check if there is a creds.json file
+# Check if there is a creds.json file
 if os.path.isfile("{}/creds.json".format(os.getcwd())) == False:
     print("Error: creds.json missing.")
     sys.exit(1)
@@ -71,32 +63,27 @@ else:
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "{}/creds.json".format(os.getcwd())
 
 
-#Load google vision
+# Load google vision
 from google.cloud import vision_v1p3beta1 as vision
 client = vision.ImageAnnotatorClient()
 from google.protobuf.json_format import MessageToJson
 
 
-
-#Import database settings from settings.py file
-#import settings
-
-
-#Get images
+# Get images
 list_of_files = glob.glob('{}/*.jpg'.format(path))
 print("\n\nFound {} files.".format(len(list_of_files)))
 
 
-#Run each file
+# Run each file
 for filename in list_of_files:
     file_stem = Path(filename).stem
-    #Open file
+    # Open file
     print("Reading image...")
     with io.open(filename, 'rb') as image_file:
         content = image_file.read()
     image = vision.types.Image(content = content)
     results = client.object_localization(image=image)
-    jsonObj = json.loads(MessageToJson(results, preserving_proto_field_name=True))#["localizedObjectAnnotations"]
+    jsonObj = json.loads(MessageToJson(results, preserving_proto_field_name=True))
     with open('{}/{}.json'.format("images", file_stem), 'w') as out:
             out.write(json.dumps(jsonObj))
 

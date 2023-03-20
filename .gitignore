@@ -133,3 +133,6 @@ dmypy.json
 settings.py
 
 creds.json
+
+*.json
+*.jpg

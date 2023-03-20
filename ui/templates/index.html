@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block content %}
+
+
+<h3>DPO - ML Object Detection</h3>
+
+    <h2>Files: </h2>
+
+    {% set count = namespace(value=0) %}
+
+    {% for file in list_of_files %}
+
+        {% set count.value = count.value + 1 %}
+
+        {% if count.value > 3 %}
+            {% set count.value = 1 %}
+        {% endif %}
+
+        {% if count.value == 1 %}
+            <div class = "row">
+                <div class = "col-4">
+                    <p>
+                        <a href="{{ url_for('get_resultsfile') }}?file={{file}}">{{file}}<br>
+                        <img src = "static/data/{{file}}.jpg" width = 280 height = "auto"></a>
+                    </p>
+                </div>
+        {% endif %}
+
+        {% if count.value == 2 %}
+                <div class = "col-4">
+                    <p>
+                        <a href="{{ url_for('get_resultsfile') }}?file={{file}}">{{file}}<br>
+                        <img src = "static/data/{{file}}.jpg" width = 280 height = "auto"></a>
+                    </p>
+                </div>
+        {% endif %}
+
+        {% if count.value == 3 %}
+                <div class = "col-4">
+                    <p>
+                        <a href="{{ url_for('get_resultsfile') }}?file={{file}}">{{file}}<br>
+                        <img src = "static/data/{{file}}.jpg" width = 280 height = "auto"></a>
+                    </p>
+                </div>
+            </div>
+        {% endif %}
+
+
+
+    {% endfor %}
+
+{% endblock %}
+
